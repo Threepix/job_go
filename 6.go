@@ -12,60 +12,6 @@ func Random(min int, max int) int {
 	return min + rand.Intn(max)
 }
 
-func proizv1(ch chan int) {
-	fmt.Println("post 1 started")
-
-	fmt.Println("Press q to quit")
-	for true {
-		if len(ch) >= 100 {
-			fmt.Println("Continuing loop")
-			continue
-		}
-		if len(ch) <= 80 {
-			t := Random(1, 100)
-			ch <- t
-			//fmt.Println("1 chanal make " + string(<-ch))
-		}
-	}
-}
-func proizv2(ch chan int) {
-	fmt.Println("post 2 started")
-
-	fmt.Println("Press q to quit")
-	for true {
-		if len(ch) >= 100 {
-			fmt.Println("Continuing loop")
-			continue
-		}
-		if len(ch) <= 80 {
-			t := Random(1, 100)
-			ch <- t
-			//fmt.Println("2 chanal make " + string(<-ch))
-		}
-	}
-}
-func proizv3(ch chan int, dead chan bool) {
-	fmt.Println("post3 started")
-	fmt.Println("Press q to quit")
-	t := Random(1, 100)
-	for true {
-		if len(ch) >= 100 {
-			fmt.Println("Continuing loop")
-			continue
-		}
-		select {
-		case ch <- t:
-			if len(ch) <= 80 {
-				ch <- t
-				//fmt.Println("3 chanal make " + string(<-ch))
-			}
-		case <-dead:
-			close(ch)
-			return
-		}
-	}
-}
-
 func pocup1(ch1 chan int) {
 	fmt.Println("byer 1 started")
 	for true {
